@@ -1,0 +1,26 @@
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: library-db
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: librarydb
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: library-pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: password
+    ports:
+      - "5050:80"
+    depends_on:
+      - db
+
+volumes:
+  db_data:
